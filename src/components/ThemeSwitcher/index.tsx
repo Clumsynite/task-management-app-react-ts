@@ -1,16 +1,13 @@
 import useDarkMode from "@fisch0920/use-dark-mode";
 import SunIcon from "./SunIcon";
 import MoonIcon from "./MoonIcon";
-import { Tooltip } from "@nextui-org/react";
+import { Tooltip } from "src/components/Common";
 
 const ThemeSwitcher = () => {
   const darkMode = useDarkMode(false);
 
   return (
-    <Tooltip
-      content={`Turn the lights ${darkMode.value ? "on" : "off"}`}
-      className={`${!darkMode.value ? "dark" : ""} text-foreground bg-background`}
-    >
+    <Tooltip content={`Turn the lights ${darkMode.value ? "on" : "off"}`}>
       <div
         onClick={darkMode.toggle}
         className="cursor-pointer"

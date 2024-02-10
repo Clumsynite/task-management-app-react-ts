@@ -18,6 +18,7 @@ export default {
               foreground: "#FFFFFF",
               DEFAULT: "#006FEE",
             },
+            success: "#2E8B57"
           },
         },
         dark: {
@@ -28,6 +29,7 @@ export default {
               foreground: "#FFFFFF",
               DEFAULT: "#006FEE",
             },
+            success: "#14ff14"
           },
         },
       },

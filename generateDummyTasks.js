@@ -2,7 +2,7 @@ import fs from "fs";
 const tasks = [];
 const categories = ["ADDED", "STARTED", "COMPLETED"];
 const priorities = ["HIGH", "MEDIUM", "LOW"];
-const count = 1000;
+const count = 100;
 
 const random = (array) => array[Math.floor(Math.random() * array.length)];
 
@@ -15,6 +15,7 @@ for (let i = 0; i < count; i++) {
   const createdAt = new Date().toISOString();
   const updatedAt = new Date().toISOString();
   const priority = random(priorities);
+  const completeTill = new Date().toISOString();
   const completedAt = new Date().toISOString();
   const taskObj = {
     id,
@@ -24,6 +25,7 @@ for (let i = 0; i < count; i++) {
     updatedAt,
     category,
     priority,
+    completeTill,
     completedAt,
   };
   tasks.push(taskObj);

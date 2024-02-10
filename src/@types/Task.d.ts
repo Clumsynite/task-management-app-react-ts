@@ -1,6 +1,6 @@
 type Categories = "ADDED" | "STARTED" | "COMPLETED";
 
-type CategoryColors = "primary" | "success" | "danger";
+type Colors = "primary" | "success" | "danger" | "secondary";
 
 type Priority = "HIGH" | "MEDIUM" | "LOW";
 
@@ -12,9 +12,10 @@ interface TaskItem {
   updatedAt: string;
   category: Categories;
   priority: Priority;
+  completeTill: string;
   completedAt: string;
 }
 
 type Tasks = TaskItem[];
 
-export { Categories, CategoryColors, Priority, TaskItemType, Tasks };
+export { Categories, Colors, Priority, TaskItemType, Tasks };
