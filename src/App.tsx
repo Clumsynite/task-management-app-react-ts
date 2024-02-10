@@ -8,7 +8,9 @@ const App = () => {
   return (
     <main
       id="App"
-      className={`${darkMode.value ? "dark" : ""} w-screen h-screen text-foreground bg-background transition-all`}
+      className={`${
+        darkMode.value ? "dark" : ""
+      } max-w-screen h-screen text-foreground bg-background transition-all overflow-hidden`}
     >
       <Nav />
       <TaskManagement />

@@ -27,6 +27,4 @@
   "include": ["src", "src/@types"],
   "typeRoots": ["src/@types", "node_modules/@types"],
   "references": [{ "path": "./tsconfig.node.json" }]
-
-  // ...
 }
