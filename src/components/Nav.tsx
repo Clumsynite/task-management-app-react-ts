@@ -1,4 +1,5 @@
-import { Navbar, NavbarBrand, NavbarContent, Avatar } from "@nextui-org/react";
+import { Navbar, NavbarBrand, NavbarContent } from "@nextui-org/react";
+import ThemeSwitcher from "./ThemeSwitcher";
 
 const Nav = () => {
   return (
@@ -8,15 +9,7 @@ const Nav = () => {
       </NavbarBrand>
 
       <NavbarContent as="div" justify="end">
-        <Avatar
-          isBordered
-          as="button"
-          className="transition-transform"
-          color="secondary"
-          name="Jason Hughes"
-          size="sm"
-          src="https://i.pravatar.cc/150?u=a042581f4e29026704d"
-        />
+        <ThemeSwitcher />
       </NavbarContent>
     </Navbar>
   );
