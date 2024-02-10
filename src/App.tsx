@@ -10,7 +10,7 @@ const App = () => {
       id="App"
       className={`${
         darkMode.value ? "dark" : ""
-      } max-w-screen h-screen text-foreground bg-background transition-all overflow-hidden`}
+      } max-w-screen min-h-screen text-foreground bg-background transition-all bg-gradient-to-r from-[#2C3E50] to-[#000000]`}
     >
       <Nav />
       <TaskManagement />

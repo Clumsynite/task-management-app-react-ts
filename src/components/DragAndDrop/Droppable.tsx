@@ -3,16 +3,15 @@ import { ReactNode } from "react";
 
 interface DroppableProps extends UseDroppableArguments {
   children: ReactNode;
-  isDragging?: boolean;
 }
 
-const Droppable = ({ id, isDragging, children }: DroppableProps) => {
+const Droppable = ({ id, children }: DroppableProps) => {
   const { setNodeRef, isOver } = useDroppable({
     id: id,
   });
-
+  console.log(id, isOver);
   return (
-    <div ref={setNodeRef} style={{ opacity: !isDragging || isOver ? 1 : 0.7 }}>
+    <div ref={setNodeRef} style={{ ...(isOver && { color: "red", fontWeight: "bold" }) }}>
       {children}
     </div>
   );

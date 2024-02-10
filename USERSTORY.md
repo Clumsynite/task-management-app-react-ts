@@ -33,7 +33,8 @@ Implement the ability to move tasks between categories via drag-and-drop.
 ### Data Storage:
 Store task data in local state.
 Implement basic client-side storage for user's task data (e.g., using browser local storage).
-Latest Tools and Libraries:
+
+### Latest Tools and Libraries:
 Use the latest stable version of React.
 Implement styling using CSS or a CSS-in-JS solution.
 
