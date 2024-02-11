@@ -1,42 +1,45 @@
-import { DndContext, DragEndEvent, rectIntersection } from "@dnd-kit/core";
 import { useState } from "react";
-import Droppable from "../DragAndDrop/Droppable";
 import dummyTasks from "src/tasks.json";
 import { Tasks, Categories } from "src/@types/Task";
 import TaskList from "./TaskList";
+import { DragDropContext, DropResult } from "react-beautiful-dnd";
 
 const TaskManagement = () => {
   const categories: Categories[] = ["ADDED", "STARTED", "COMPLETED"];
-  const [tasks, setTasks] = useState<Tasks>(dummyTasks.slice(0, 100));
+  const [tasks, setTasks] = useState<Tasks>(dummyTasks);
 
-  const handleDragEnd = (event: DragEndEvent) => {
-    const { over } = event;
+  const onDragEnd = (result: DropResult) => {
+    const { source, destination } = result;
+    if (!destination) return;
+    if (source.droppableId === destination.droppableId && source.index === destination.index) return;
+    const oldCategory = source.droppableId as Categories;
+    const newCategory = destination.droppableId as Categories;
 
-    if (over && event.active) {
-      const newCategory = over.id;
-      const elemId = event.active.id as string;
-      const [id, oldCategory] = elemId.split("|");
-      if (oldCategory === newCategory) return;
-      const clonedtasks = Array.from(tasks);
-      const taskIndex = clonedtasks.findIndex((task) => task.id === id);
-      if (taskIndex === -1) return;
-      clonedtasks[taskIndex].category = newCategory as Categories;
-      console.log({ taskIndex, newCategory, oldCategory });
-      setTasks([...clonedtasks]);
+    const newtasksObj = { ...tasks };
+    if (oldCategory == newCategory) {
+      const tasks = newtasksObj[oldCategory];
+      const [removeTask] = tasks.splice(source.index, 1);
+      tasks.splice(destination.index, 0, removeTask);
+      newtasksObj[oldCategory] = tasks;
+    } else {
+      // remove from old category
+      const oldtasks = newtasksObj[oldCategory];
+      const [removeTask] = oldtasks.splice(source.index, 1);
+      const newTasks = newtasksObj[newCategory];
+      newTasks.splice(destination.index, 0, removeTask);
     }
+    setTasks({ ...newtasksObj });
   };
 
   return (
     <div className={"text-center"}>
-      <DndContext onDragEnd={handleDragEnd} collisionDetection={rectIntersection}>
+      <DragDropContext onDragEnd={onDragEnd}>
         <div className="p-2 flex flex-row items-start">
           {categories.map((category) => (
-            <Droppable id={category} key={category} className="flex-[1]">
-              <TaskList category={category} tasks={tasks} />
-            </Droppable>
+            <TaskList category={category} tasks={tasks[category]} key={category} />
           ))}
         </div>
-      </DndContext>
+      </DragDropContext>
     </div>
   );
 };

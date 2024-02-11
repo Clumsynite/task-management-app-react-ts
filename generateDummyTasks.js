@@ -1,5 +1,5 @@
 import fs from "fs";
-const tasks = [];
+const tasks = {};
 const categories = ["ADDED", "STARTED", "COMPLETED"];
 const priorities = ["HIGH", "MEDIUM", "LOW"];
 const count = 100;
@@ -23,12 +23,13 @@ for (let i = 0; i < count; i++) {
     description,
     createdAt,
     updatedAt,
-    category,
+    // category,
     priority,
     completeTill,
     completedAt,
   };
-  tasks.push(taskObj);
+  if (!tasks[category]) tasks[category] = [taskObj];
+  else tasks[category].push(taskObj);
 }
 
 fs.writeFileSync("tasks.json", JSON.stringify(tasks, null, 2));

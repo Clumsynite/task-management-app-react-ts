@@ -1,35 +1,37 @@
-import { useMemo } from "react";
-import { Categories, Colors, Tasks } from "src/@types/Task";
-import Draggable from "../DragAndDrop/Draggable";
+import { Categories, Colors, TaskItemType } from "src/@types/Task";
 import TaskItem from "./TaskItem";
 import { categoryColor } from "src/utility/helper";
+import { Droppable } from "react-beautiful-dnd";
 
 interface TaskListProps {
   category: Categories;
-  tasks: Tasks;
+  tasks: TaskItemType[];
 }
 
 const TaskList = ({ category, tasks }: TaskListProps) => {
-  const filterTasks = (tasks: Tasks, tab: Categories) => tasks.filter((task) => task.category === tab);
-  const visibleTasks = useMemo(() => filterTasks(tasks, category), [tasks, category]);
   // console.log(category, visibleTasks.length);
   const color = categoryColor[category as Categories] as Colors;
 
   return (
-    <div className={`p-2 mx-1 drop-shadow-lg backdrop-blur-md bg-background rounded-md `}>
-      <div
-        className={`capitalize my-2 text-${color} text-2xl p-2 rounded-md bg-foreground bg-opacity-10 backdrop-blur-lg drop-shadow-lg`}
-      >
-        {category.toLowerCase()}
-      </div>
-      <div className="">
-        {visibleTasks.map((task) => (
-          <Draggable key={task.id} id={`${task.id}|${category}`}>
-            <TaskItem {...task} />
-          </Draggable>
-        ))}
-      </div>
-    </div>
+    <Droppable droppableId={category} key={category}>
+      {(provided) => (
+        <div className="flex-[1]" {...provided.droppableProps} ref={provided.innerRef}>
+          <div className={`p-2 mx-1  bg-background rounded-md `}>
+            <div
+              className={`capitalize my-2 text-${color} text-2xl p-2 rounded-md bg-foreground bg-opacity-10 backdrop-blur-lg drop-shadow-lg`}
+            >
+              {category.toLowerCase()}
+            </div>
+            <div className="">
+              {tasks.map((task, index) => (
+                <TaskItem {...task} index={index} key={task.id} category={category} />
+              ))}
+              {provided.placeholder}
+            </div>
+          </div>
+        </div>
+      )}
+    </Droppable>
   );
 };
 

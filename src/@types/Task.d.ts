@@ -4,18 +4,22 @@ type Colors = "primary" | "success" | "danger" | "secondary";
 
 type Priority = "HIGH" | "MEDIUM" | "LOW";
 
-interface TaskItem {
+interface TaskItemType {
   id: string;
   title: string;
   description: string;
   createdAt: string;
   updatedAt: string;
-  category: Categories;
+  // category: Categories;
   priority: Priority;
   completeTill: string;
   completedAt: string;
 }
 
-type Tasks = TaskItem[];
+interface Tasks {
+  ADDED: TaskItemType[];
+  STARTED: TaskItemType[];
+  COMPLETED: TaskItemType[];
+}
 
 export { Categories, Colors, Priority, TaskItemType, Tasks };
