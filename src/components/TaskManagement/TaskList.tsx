@@ -2,14 +2,13 @@ import { Categories, Colors, TaskItemType } from "src/@types/Task";
 import TaskItem from "./TaskItem";
 import { categoryColor } from "src/utility/helper";
 import { Droppable } from "react-beautiful-dnd";
-import { memo } from "react";
 
 interface TaskListProps {
   category: Categories;
   tasks: TaskItemType[];
 }
 
-const TaskList = memo(({ category, tasks }: TaskListProps) => {
+const TaskList = ({ category, tasks }: TaskListProps) => {
   const color = categoryColor[category as Categories] as Colors;
 
   return (
@@ -34,6 +33,6 @@ const TaskList = memo(({ category, tasks }: TaskListProps) => {
       )}
     </Droppable>
   );
-});
+};
 
 export default TaskList;

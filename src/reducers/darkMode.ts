@@ -24,7 +24,6 @@ export const dakrModeSlice = createSlice({
 
 export const { toggle } = dakrModeSlice.actions;
 
-// Other code such as selectors can use the imported `RootState` type
-export const selectCount = (state: RootState) => state.dakrMode.value;
+export const isDarkMode = (state: RootState) => state.dakrMode.value;
 
 export default dakrModeSlice.reducer;

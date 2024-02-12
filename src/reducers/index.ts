@@ -1,3 +1,4 @@
 import dakrMode from "./darkMode";
+import tasks from "./tasks";
 
-export { dakrMode };
+export { dakrMode, tasks };

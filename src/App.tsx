@@ -2,10 +2,10 @@ import TaskManagement from "src/components/TaskManagement";
 import Nav from "./components/Nav";
 import { gradients } from "./utility/helper";
 import { useAppSelector } from "./hooks";
+import { isDarkMode } from "./reducers/darkMode";
 
 const App = () => {
-  const darkMode = useAppSelector((state) => state.dakrMode.value);
-
+  const darkMode = useAppSelector(isDarkMode);
   const bgGradient = darkMode ? gradients.dark : gradients.light;
 
   return (

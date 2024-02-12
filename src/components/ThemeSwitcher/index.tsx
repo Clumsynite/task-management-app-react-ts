@@ -2,10 +2,10 @@ import SunIcon from "./SunIcon";
 import MoonIcon from "./MoonIcon";
 import { Tooltip } from "src/components/Common";
 import { useAppDispatch, useAppSelector } from "src/hooks";
-import { toggle } from "src/reducers/darkMode";
+import { isDarkMode, toggle } from "src/reducers/darkMode";
 
 const ThemeSwitcher = () => {
-  const darkMode = useAppSelector((state) => state.dakrMode.value);
+  const darkMode = useAppSelector(isDarkMode);
   const dispatch = useAppDispatch();
 
   return (

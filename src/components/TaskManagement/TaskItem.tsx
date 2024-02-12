@@ -4,7 +4,6 @@ import { Categories, Colors, Priority, TaskItemType } from "src/@types/Task";
 import { formatTimestamp, priorityColor } from "../../utility/helper";
 import { Tooltip } from "../Common";
 import { Draggable } from "react-beautiful-dnd";
-import { memo } from "react";
 
 const toNow = (timestamp: string) => moment(timestamp).toNow();
 
@@ -22,39 +21,47 @@ interface TaskItemProps extends TaskItemType {
   category: Categories;
 }
 
-const TaskItem = memo(
-  ({ id, title, createdAt, updatedAt, category, priority, completeTill, completedAt, index }: TaskItemProps) => {
-    return (
-      <Draggable key={id} draggableId={id} index={index}>
-        {(provided) => (
-          <div ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps} className="item">
-            <div className="p-2 mb-2 rounded-md bg-foreground text-white bg-opacity-50  drop-shadow-lg">
-              <div className="top-1 flex-col !items-start">
-                <div className="text-tiny uppercase font-bold">{title}</div>
+const TaskItem = ({
+  id,
+  title,
+  createdAt,
+  updatedAt,
+  category,
+  priority,
+  completeTill,
+  completedAt,
+  index,
+}: TaskItemProps) => {
+  return (
+    <Draggable key={id} draggableId={id} index={index}>
+      {(provided) => (
+        <div ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps} className="item">
+          <div className="p-2 mb-2 rounded-md bg-foreground text-white bg-opacity-50  drop-shadow-lg">
+            <div className="top-1 flex-col !items-start">
+              <div className="text-tiny uppercase font-bold">{title}</div>
+            </div>
+            <div className="border-t-1 border-zinc-100/50 z-10 flex flex-row items-center justify-between">
+              <div className="text-start">
+                <Timestamp timestamp={createdAt} title="Created At: " />
+                <Timestamp timestamp={updatedAt} title="Updated At: " />
+                {category === "COMPLETED" ? (
+                  <Timestamp timestamp={completedAt} title="Completed At: " />
+                ) : (
+                  <Timestamp timestamp={completeTill} title="Complete Till: " />
+                )}
               </div>
-              <div className="border-t-1 border-zinc-100/50 z-10 flex flex-row items-center justify-between">
-                <div className="text-start">
-                  <Timestamp timestamp={createdAt} title="Created At: " />
-                  <Timestamp timestamp={updatedAt} title="Updated At: " />
-                  {category === "COMPLETED" ? (
-                    <Timestamp timestamp={completedAt} title="Completed At: " />
-                  ) : (
-                    <Timestamp timestamp={completeTill} title="Complete Till: " />
-                  )}
-                </div>
-                <div>
-                  <Chip className="capitalize" color={priorityColor[priority as Priority] as Colors}>
-                    {priority.toLowerCase()}
-                  </Chip>
-                </div>
+              <div>
+                <Chip className="capitalize" color={priorityColor[priority as Priority] as Colors}>
+                  {priority.toLowerCase()}
+                </Chip>
               </div>
             </div>
           </div>
-        )}
-      </Draggable>
-    );
-  }
-  // (oldProps: TaskItemProps, newProps: TaskItemProps) => oldProps.id === newProps.id
-);
+        </div>
+      )}
+    </Draggable>
+  );
+};
+// (oldProps: TaskItemProps, newProps: TaskItemProps) => oldProps.id === newProps.id
 
 export default TaskItem;
