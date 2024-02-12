@@ -2,7 +2,7 @@ import fs from "fs";
 const tasks = {};
 const categories = ["ADDED", "STARTED", "COMPLETED"];
 const priorities = ["HIGH", "MEDIUM", "LOW"];
-const count = 100;
+const count = 20;
 
 const random = (array) => array[Math.floor(Math.random() * array.length)];
 
