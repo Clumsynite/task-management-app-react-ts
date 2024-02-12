@@ -1,14 +1,11 @@
-import useDarkMode from "@fisch0920/use-dark-mode";
 import { TooltipProps, Tooltip as NextUiTooltip } from "@nextui-org/react";
+import { useAppSelector } from "src/hooks";
 
 const Tooltip = (props: TooltipProps) => {
-  const darkMode = useDarkMode(false);
+  const darkMode = useAppSelector((state) => state.dakrMode.value);
 
   return (
-    <NextUiTooltip
-      className={`${darkMode.value ? "dark" : ""} text-foreground bg-background ${props.className}`}
-      {...props}
-    >
+    <NextUiTooltip className={`${darkMode ? "dark" : ""} text-foreground bg-background ${props.className}`} {...props}>
       {props.children}
     </NextUiTooltip>
   );
