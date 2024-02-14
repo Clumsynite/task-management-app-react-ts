@@ -5,7 +5,6 @@ import { DropResult } from "react-beautiful-dnd";
 
 const localTasks = localStorage.getItem("tasks");
 
-// Define the initial state using that type
 const initialState: Tasks = localTasks
   ? JSON.parse(localTasks)
   : {
@@ -16,36 +15,35 @@ const initialState: Tasks = localTasks
 
 export const tasksSlice = createSlice({
   name: "tasks",
-  // `createSlice` will infer the state type from the `initialState` argument
   initialState,
   reducers: {
     onDragEnd: (state, action: PayloadAction<DropResult>) => {
       const result = action.payload;
       const { source, destination } = result;
+
       if (!destination) return;
       if (source.droppableId === destination.droppableId && source.index === destination.index) return;
+
       const oldCategory = source.droppableId as Categories;
       const newCategory = destination.droppableId as Categories;
 
-      const newtasksObj = JSON.parse(JSON.stringify(state));
+      const newtasksObj = { ...state };
 
       const updatedAt = new Date().toISOString();
+      const oldTasks = newtasksObj[oldCategory];
+      const [removeTask] = oldTasks.splice(source.index, 1);
+      removeTask.updatedAt = updatedAt;
+
+      // update index in same category
       if (oldCategory == newCategory) {
-        const tasks = newtasksObj[oldCategory];
-        const [removeTask] = tasks.splice(source.index, 1);
-        removeTask.updatedAt = updatedAt;
-        tasks.splice(destination.index, 0, removeTask);
-        newtasksObj[oldCategory] = tasks;
+        oldTasks.splice(destination.index, 0, removeTask);
+        newtasksObj[oldCategory] = oldTasks;
       } else {
-        // remove from old category
-        const oldtasks = newtasksObj[oldCategory];
-        const [removeTask] = oldtasks.splice(source.index, 1);
+        // add to new category
         const newTasks = newtasksObj[newCategory];
-        removeTask.updatedAt = updatedAt;
         newTasks.splice(destination.index, 0, removeTask);
       }
       state = { ...newtasksObj };
-      console.log(result);
       localStorage.setItem("tasks", JSON.stringify(state));
     },
     setTasks: (state, action: PayloadAction<Tasks>) => {

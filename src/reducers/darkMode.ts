@@ -6,9 +6,13 @@ export interface DarkModeState {
   value: boolean;
 }
 
+const localTheme = localStorage.getItem("darkMode");
+
+const isLocallyDark = localTheme ? localTheme === "true" : false;
+
 // Define the initial state using that type
 const initialState: DarkModeState = {
-  value: true,
+  value: isLocallyDark,
 };
 
 export const dakrModeSlice = createSlice({
@@ -17,6 +21,7 @@ export const dakrModeSlice = createSlice({
   initialState,
   reducers: {
     toggle: (state) => {
+      localStorage.setItem("darkMode", String(!state.value));
       state.value = !state.value;
     },
   },
