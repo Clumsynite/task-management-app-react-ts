@@ -3,7 +3,7 @@ import Nav from "./components/Nav";
 import { gradients } from "./utility/helper";
 import { useAppSelector } from "./hooks";
 import { isDarkMode } from "./reducers/darkMode";
-import TaskForm from "./components/TaskManagement/TaskForm";
+import TaskModal from "./components/TaskManagement/TaskModal";
 
 const App = () => {
   const darkMode = useAppSelector(isDarkMode);
@@ -12,14 +12,14 @@ const App = () => {
   return (
     <main
       id="App"
-      className={`${darkMode ? "dark" : ""} max-w-screen min-h-screen text-foreground bg-background transition-all `}
+      className={`${darkMode ? "dark" : ""} max-w-screen- min-h-screen text-foreground bg-background transition-all `}
       style={{
         background: `linear-gradient(90deg, ${bgGradient.from}, ${bgGradient.to})`,
       }}
     >
       <Nav />
-      <TaskForm />
       <TaskManagement />
+      <TaskModal />
     </main>
   );
 };

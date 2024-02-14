@@ -1,8 +1,7 @@
-import SunIcon from "./SunIcon";
-import MoonIcon from "./MoonIcon";
 import { Tooltip } from "src/components/Common";
 import { useAppDispatch, useAppSelector } from "src/hooks";
 import { isDarkMode, toggle } from "src/reducers/darkMode";
+import { MoonIcon, SunIcon } from "../Icons";
 
 const ThemeSwitcher = () => {
   const darkMode = useAppSelector(isDarkMode);

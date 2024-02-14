@@ -1,11 +1,12 @@
 import { configureStore } from "@reduxjs/toolkit";
 
-import { dakrMode as dakrModeReducer, tasks as tasksReducer } from "./reducers";
+import { dakrMode as dakrModeReducer, tasks as tasksReducer, taskModal as taskModalReducer } from "./reducers";
 
 const store = configureStore({
   reducer: {
     dakrMode: dakrModeReducer,
     tasks: tasksReducer,
+    taskModal: taskModalReducer,
   },
 });
 

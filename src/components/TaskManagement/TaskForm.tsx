@@ -1,8 +1,10 @@
 import { Button, Input, Select, SelectItem, Textarea } from "@nextui-org/react";
 import moment from "moment";
 import { useForm, SubmitHandler } from "react-hook-form";
-import { Categories, Colors, Priority, TaskItemType } from "src/@types/Task";
-import { useAppDispatch } from "src/hooks";
+import { Categories, Colors, Priority, TaskItemType, TaskMode } from "src/@types/Task";
+import { useAppDispatch, useAppSelector } from "src/hooks";
+import { isDarkMode } from "src/reducers/darkMode";
+import { closeModal } from "src/reducers/taskModal";
 import { addTask } from "src/reducers/tasks";
 import { categoryColor, priorityColor } from "src/utility/helper";
 
@@ -14,9 +16,11 @@ const tomorrow = moment().add(1, "day").format("YYYY-MM-DD");
 const nextMonthsDate = moment().add(1, "month").format("YYYY-MM-DD");
 
 type TypeFormProps = {
-  defaultCategory: Categories;
+  defaultCategory: Categories | undefined;
+  mode: TaskMode;
+  task: TaskItemType | undefined;
 };
-const TaskForm = ({ defaultCategory }: TypeFormProps) => {
+const TaskForm = ({ defaultCategory, mode }: TypeFormProps) => {
   const {
     register,
     handleSubmit,
@@ -24,6 +28,7 @@ const TaskForm = ({ defaultCategory }: TypeFormProps) => {
     formState: { errors },
   } = useForm<TaskItemInput>();
   const dispatch = useAppDispatch();
+  const darkMode = useAppSelector(isDarkMode);
 
   const onSubmit: SubmitHandler<TaskItemInput> = ({ category, description, dueDate, priority, title }) => {
     const currentISO = moment().toISOString();
@@ -38,6 +43,7 @@ const TaskForm = ({ defaultCategory }: TypeFormProps) => {
       priority,
     };
     dispatch(addTask({ task: taskObj, category }));
+    dispatch(closeModal());
   };
   const category = watch("category");
   const priority = watch("priority");
@@ -46,7 +52,7 @@ const TaskForm = ({ defaultCategory }: TypeFormProps) => {
   const pColor = priority ? (priorityColor[priority as Priority] as Colors) : "default";
 
   return (
-    <div className="p-2 bg-background m-2 rounded-md backdrop-blur-lg drop-shadow-lg">
+    <div className={`${darkMode ? "dark" : ""} bg-background text-foreground rounded-md`}>
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="py-2">
           <Input
@@ -59,6 +65,8 @@ const TaskForm = ({ defaultCategory }: TypeFormProps) => {
             })}
             isInvalid={!!errors.title?.message}
             errorMessage={errors?.title?.message}
+            autoFocus
+            isReadOnly={mode === "View"}
           />
         </div>
         <div className="py-2">
@@ -68,6 +76,7 @@ const TaskForm = ({ defaultCategory }: TypeFormProps) => {
             {...register("description")}
             isInvalid={!!errors.description}
             errorMessage={errors?.description?.message}
+            isReadOnly={mode === "View"}
           />
         </div>
         <div className="py-2">
@@ -82,7 +91,7 @@ const TaskForm = ({ defaultCategory }: TypeFormProps) => {
             })}
             isInvalid={!!errors.category}
             errorMessage={errors?.category?.message}
-            isDisabled={!!defaultCategory}
+            isDisabled={!!defaultCategory || mode === "View"}
             color={cColor}
           >
             {({ label, value }) => (
@@ -102,6 +111,7 @@ const TaskForm = ({ defaultCategory }: TypeFormProps) => {
             color={pColor}
             isInvalid={!!errors.priority}
             errorMessage={errors?.priority?.message}
+            isDisabled={mode === "View"}
           >
             {({ label, value }) => (
               <SelectItem key={value} color={priorityColor[value] as Colors} value={value}>
@@ -122,13 +132,16 @@ const TaskForm = ({ defaultCategory }: TypeFormProps) => {
             })}
             isInvalid={!!errors.dueDate}
             errorMessage={errors?.dueDate?.message}
+            isReadOnly={mode === "View"}
           />
         </div>
-        <div className="py-2 flex flex-row items-center justify-center">
-          <Button type="submit" variant="shadow" color="primary" size="lg">
-            Create Task
-          </Button>
-        </div>
+        {mode !== "View" ? (
+          <div className="py-2 flex flex-row items-center justify-center">
+            <Button type="submit" variant="shadow" color="primary" size="lg">
+              {mode} Task
+            </Button>
+          </div>
+        ) : null}
       </form>
     </div>
   );

@@ -1,5 +1,6 @@
 import { Navbar, NavbarBrand, NavbarContent } from "@nextui-org/react";
 import ThemeSwitcher from "./ThemeSwitcher";
+import AddtaskButton from "./TaskManagement/AddtaskButton";
 
 const Nav = () => {
   // return (
@@ -21,6 +22,9 @@ const Nav = () => {
       </NavbarBrand>
 
       <NavbarContent as="div" justify="end">
+        <div className="px-4">
+          <AddtaskButton />
+        </div>
         <ThemeSwitcher />
       </NavbarContent>
     </Navbar>

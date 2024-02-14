@@ -4,6 +4,8 @@ type Colors = "primary" | "success" | "danger" | "secondary";
 
 type Priority = "HIGH" | "MEDIUM" | "LOW";
 
+type TaskMode = "Add" | "Edit" | "View" | undefined;
+
 interface TaskItemType {
   id: string;
   title: string;
@@ -21,4 +23,4 @@ interface Tasks {
   COMPLETED: TaskItemType[];
 }
 
-export { Categories, Colors, Priority, TaskItemType, Tasks };
+export { Categories, Colors, Priority, TaskMode, TaskItemType, Tasks };
