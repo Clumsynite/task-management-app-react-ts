@@ -10,10 +10,9 @@ interface TaskItemType {
   description: string;
   createdAt: string;
   updatedAt: string;
-  // category: Categories;
   priority: Priority;
-  completeTill: string;
-  completedAt: string;
+  dueDate: string;
+  completedAt: string | null;
 }
 
 interface Tasks {

@@ -3,6 +3,7 @@ import Nav from "./components/Nav";
 import { gradients } from "./utility/helper";
 import { useAppSelector } from "./hooks";
 import { isDarkMode } from "./reducers/darkMode";
+import TaskForm from "./components/TaskManagement/TaskForm";
 
 const App = () => {
   const darkMode = useAppSelector(isDarkMode);
@@ -17,6 +18,7 @@ const App = () => {
       }}
     >
       <Nav />
+      <TaskForm />
       <TaskManagement />
     </main>
   );

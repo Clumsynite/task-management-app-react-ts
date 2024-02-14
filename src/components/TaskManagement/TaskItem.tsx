@@ -28,7 +28,7 @@ const TaskItem = ({
   updatedAt,
   category,
   priority,
-  completeTill,
+  dueDate,
   completedAt,
   index,
 }: TaskItemProps) => {
@@ -47,7 +47,7 @@ const TaskItem = ({
                 {category === "COMPLETED" ? (
                   <Timestamp timestamp={completedAt} title="Completed At: " />
                 ) : (
-                  <Timestamp timestamp={completeTill} title="Complete Till: " />
+                  <Timestamp timestamp={dueDate} title="Complete Till: " />
                 )}
               </div>
               <div>
