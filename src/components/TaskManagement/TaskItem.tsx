@@ -4,6 +4,7 @@ import { Categories, Colors, Priority, TaskItemType } from "src/@types/Task";
 import { formatTimestamp, priorityColor } from "../../utility/helper";
 import { Tooltip } from "../Common";
 import { Draggable } from "react-beautiful-dnd";
+import DeleteTaskButton from "./DeleteTaskButton";
 
 const toNow = (timestamp: string) => moment(timestamp).fromNow();
 
@@ -38,8 +39,11 @@ const TaskItem = ({
       {(provided) => (
         <div ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps} className="item">
           <div className="p-2 mb-2 rounded-md bg-foreground text-foreground bg-opacity-10 drop-shadow-lg">
-            <div className="top-1 flex-col !items-start p-2">
-              <div className="text-base uppercase font-bold">{title}</div>
+            <div className="flex flex-row items-center p-2">
+              <div className="text-base uppercase font-bold flex-[1]">{title}</div>
+              <div>
+                <DeleteTaskButton category={category} index={index} />
+              </div>
             </div>
             <div className="border-t-1 border-zinc-100/50 p-4">
               <div className="text-sm  text-start font-light">{description}</div>

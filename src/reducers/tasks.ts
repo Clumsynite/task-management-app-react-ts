@@ -56,10 +56,17 @@ export const tasksSlice = createSlice({
       state = { ...newtasksObj };
       localStorage.setItem("tasks", JSON.stringify(state));
     },
+    removeTask: (state, action: PayloadAction<{ index: number; category: Categories }>) => {
+      const { category, index } = action.payload;
+      const newtasksObj = { ...state };
+      newtasksObj[category].splice(index, 1);
+      state = { ...newtasksObj };
+      localStorage.setItem("tasks", JSON.stringify(state));
+    },
   },
 });
 
-export const { onDragEnd, setTasks, addTask } = tasksSlice.actions;
+export const { onDragEnd, setTasks, addTask, removeTask } = tasksSlice.actions;
 
 export const getTasks = (state: RootState) => state.tasks;
 
