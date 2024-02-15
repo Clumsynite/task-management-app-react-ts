@@ -1,8 +1,8 @@
 import { Categories, TaskItemType } from "src/@types/Task";
+import { Tooltip } from "src/components/Common";
+import EditIcon from "src/components/Icons/EditIcon";
 import { useAppDispatch } from "src/hooks";
 import { openModal } from "src/reducers/taskModal";
-import { Tooltip } from "../Common";
-import EditIcon from "../Icons/EditIcon";
 
 interface EditTaskButtonProps {
   category: Categories;
@@ -15,8 +15,7 @@ const EditTaskButton = ({ category, task }: EditTaskButtonProps) => {
   return (
     <Tooltip content="Edit Task">
       <div>
-      <EditIcon size={20} onClick={onEdit} />
-
+        <EditIcon size={20} onClick={onEdit} />
       </div>
     </Tooltip>
   );

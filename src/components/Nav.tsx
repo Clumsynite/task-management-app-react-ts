@@ -1,6 +1,6 @@
 import { Navbar, NavbarBrand, NavbarContent } from "@nextui-org/react";
 import ThemeSwitcher from "./ThemeSwitcher";
-import AddtaskButton from "./TaskManagement/AddtaskButton";
+import { AddtaskButton } from "./TaskManagement/TaskButtons";
 
 const Nav = () => {
   return (

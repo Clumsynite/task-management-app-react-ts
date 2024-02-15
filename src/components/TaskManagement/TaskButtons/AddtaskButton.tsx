@@ -1,9 +1,9 @@
 import { Categories } from "src/@types/Task";
-import { AddIcon } from "../Icons";
 import { useAppDispatch, useAppSelector } from "src/hooks";
 import { openModal } from "src/reducers/taskModal";
 import { isDarkMode } from "src/reducers/darkMode";
-import { Tooltip } from "../Common";
+import { Tooltip } from "src/components/Common";
+import { AddIcon } from "src/components/Icons";
 
 interface AddTaskButtonProps {
   category?: Categories | undefined;

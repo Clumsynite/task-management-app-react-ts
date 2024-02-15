@@ -71,6 +71,8 @@ const TaskForm = ({ defaultCategory, mode, task }: TypeFormProps) => {
   const cColor = category ? (categoryColor[category as Categories] as Colors) : "default";
   const pColor = priority ? (priorityColor[priority as Priority] as Colors) : "default";
 
+  const viewOnly = mode === "View";
+
   return (
     <div className={`${darkMode ? "dark" : ""} bg-background text-foreground rounded-md`}>
       <form onSubmit={handleSubmit(onSubmit)}>
@@ -85,12 +87,12 @@ const TaskForm = ({ defaultCategory, mode, task }: TypeFormProps) => {
             control={control}
             render={({ field }) => (
               <Input
-                isReadOnly={mode === "View"}
+                isReadOnly={viewOnly}
                 isInvalid={!!errors.title?.message}
                 errorMessage={errors?.title?.message}
                 label="Title"
                 isRequired
-                autoFocus
+                autoFocus={!viewOnly}
                 {...field}
               />
             )}
@@ -106,7 +108,7 @@ const TaskForm = ({ defaultCategory, mode, task }: TypeFormProps) => {
                 placeholder="Enter your description"
                 isInvalid={!!errors.description}
                 errorMessage={errors?.description?.message}
-                isReadOnly={mode === "View"}
+                isReadOnly={viewOnly}
                 {...field}
               />
             )}
@@ -129,11 +131,12 @@ const TaskForm = ({ defaultCategory, mode, task }: TypeFormProps) => {
                 isRequired
                 isInvalid={!!errors.category}
                 errorMessage={errors?.category?.message}
-                isDisabled={(!!defaultCategory && !task) || mode === "View"}
+                // isDisabled={(!!defaultCategory && !task) || viewOnly}
                 color={cColor}
                 defaultSelectedKeys={defaultValues.category ? [defaultValues.category] : []}
                 // {...register("category")}
-                selectedKeys={[category]}
+                selectedKeys={category ? [category] : []}
+                {...(((!!defaultCategory && !task) || viewOnly) && { isOpen: false })}
               >
                 {({ label, value }) => (
                   <SelectItem key={value} color={categoryColor[value] as Colors}>
@@ -161,9 +164,10 @@ const TaskForm = ({ defaultCategory, mode, task }: TypeFormProps) => {
                 color={pColor}
                 isInvalid={!!errors.priority}
                 errorMessage={errors?.priority?.message}
-                isDisabled={mode === "View"}
+                // isDisabled={viewOnly}
                 defaultSelectedKeys={defaultValues.priority ? [defaultValues.priority] : []}
-                selectedKeys={[priority]}
+                selectedKeys={priority ? [priority] : []}
+                {...(viewOnly && { isOpen: false })}
               >
                 {({ label, value }) => (
                   <SelectItem key={value} color={priorityColor[value] as Colors} value={value}>
@@ -190,13 +194,13 @@ const TaskForm = ({ defaultCategory, mode, task }: TypeFormProps) => {
                 isRequired
                 isInvalid={!!errors.dueDate}
                 errorMessage={errors?.dueDate?.message}
-                isReadOnly={mode === "View"}
+                isReadOnly={viewOnly}
                 {...field}
               />
             )}
           />
         </div>
-        {mode !== "View" ? (
+        {!viewOnly ? (
           <div className="py-2 flex flex-row items-center justify-center">
             <Button type="submit" variant="shadow" color="primary" size="lg">
               {mode} Task
