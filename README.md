@@ -2,6 +2,8 @@
 
 Welcome to the Task Management App! 
 
+> [User Story](./USERSTORY.md)
+
 ## Features
 
 * **React**: The repository includes the React library, allowing you to build interactive user interfaces efficiently.
@@ -87,4 +89,17 @@ Please ensure that your contributions align with the goals and style of the repo
 
 The Task Management App is released under the **MIT License**. You're free to use, modify, and distribute the code for personal or commercial projects. See the `LICENSE` file for more details.
 
-> [User Story](./USERSTORY.md)
+
+## Screenshots
+
+### Task List
+![Task List](/public//screenshots/tasks.png)
+
+### Add Task
+![Add Task](/public//screenshots/addTask.png)
+
+### Edit task
+![Edit task](/public//screenshots/editTask.png)
+
+### View task
+![View Task](/public//screenshots/viewTask.png)
