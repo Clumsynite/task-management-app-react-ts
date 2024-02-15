@@ -1,5 +1,5 @@
 // import fs from "fs";
-import { faker } from "@faker-js/faker";
+import { faker } from "@faker-js/faker/locale/en";
 import { Categories, Priority, TaskItemType, Tasks } from "src/@types/Task";
 
 const categories: Categories[] = ["ADDED", "STARTED", "COMPLETED"];
