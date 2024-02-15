@@ -5,12 +5,12 @@ export interface DarkModeState {
   value: boolean;
 }
 
-const localTheme = localStorage.getItem("darkMode");
+const isLocallyLight = localStorage.getItem("darkMode") === "false";
 
-const isLocallyDark = localTheme ? localTheme === "true" : false;
+// const isLocallyDark = localTheme ? localTheme === "true" : false;
 
 const initialState: DarkModeState = {
-  value: isLocallyDark,
+  value: !isLocallyLight,
 };
 
 export const dakrModeSlice = createSlice({
