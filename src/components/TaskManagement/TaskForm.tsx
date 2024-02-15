@@ -1,50 +1,70 @@
 import { Button, Input, Select, SelectItem, Textarea } from "@nextui-org/react";
 import moment from "moment";
-import { useForm, SubmitHandler } from "react-hook-form";
-import { Categories, Colors, Priority, TaskItemType, TaskMode } from "src/@types/Task";
+import { useForm, SubmitHandler, Controller } from "react-hook-form";
+import { Categories, Colors, Priority, TaskItemInput, TaskItemType, TaskMode } from "src/@types/Task";
 import { useAppDispatch, useAppSelector } from "src/hooks";
 import { isDarkMode } from "src/reducers/darkMode";
 import { closeModal } from "src/reducers/taskModal";
-import { addTask } from "src/reducers/tasks";
+import { addTask, editTask } from "src/reducers/tasks";
 import { categoryColor, priorityColor } from "src/utility/helper";
-
-type TaskItemInput = Omit<TaskItemType, "id" | "createdAt" | "updatedAt" | "completedAt"> & { category: Categories };
 
 const categories: Categories[] = ["ADDED", "STARTED", "COMPLETED"];
 const priorities: Priority[] = ["HIGH", "MEDIUM", "LOW"];
-const tomorrow = moment().add(1, "day").format("YYYY-MM-DD");
-const nextMonthsDate = moment().add(1, "month").format("YYYY-MM-DD");
+const dateFormat = "YYYY-MM-DD";
+
+const tomorrow = moment().add(1, "day").format(dateFormat);
+const nextMonthsDate = moment().add(1, "month").format(dateFormat);
 
 type TypeFormProps = {
   defaultCategory: Categories | undefined;
   mode: TaskMode;
   task: TaskItemType | undefined;
 };
-const TaskForm = ({ defaultCategory, mode }: TypeFormProps) => {
+const TaskForm = ({ defaultCategory, mode, task }: TypeFormProps) => {
+  const defaultValues: Partial<TaskItemInput> = {
+    category: defaultCategory,
+    description: task?.description,
+    dueDate: moment(task?.dueDate).format(dateFormat),
+    priority: task?.priority,
+    title: task?.title,
+  };
+
   const {
-    register,
+    control,
     handleSubmit,
     watch,
     formState: { errors },
-  } = useForm<TaskItemInput>();
+  } = useForm<TaskItemInput>({ defaultValues });
+
   const dispatch = useAppDispatch();
   const darkMode = useAppSelector(isDarkMode);
 
   const onSubmit: SubmitHandler<TaskItemInput> = ({ category, description, dueDate, priority, title }) => {
-    const currentISO = moment().toISOString();
-    const taskObj: TaskItemType = {
-      id: crypto.randomUUID(),
-      createdAt: currentISO,
-      updatedAt: currentISO,
-      completedAt: null,
-      title,
-      description,
-      dueDate,
-      priority,
-    };
-    dispatch(addTask({ task: taskObj, category }));
+    if (mode === "Edit" && defaultCategory && task) {
+      dispatch(
+        editTask({
+          oldCategory: defaultCategory,
+          newCategory: category,
+          task: { ...task, description, dueDate, priority, title },
+        })
+      );
+    } else {
+      const currentISO = moment().toISOString();
+      const taskObj: TaskItemType = {
+        id: crypto.randomUUID(),
+        createdAt: currentISO,
+        updatedAt: currentISO,
+        completedAt: null,
+        title,
+        description,
+        dueDate,
+        priority,
+      };
+      dispatch(addTask({ task: taskObj, category }));
+    }
     dispatch(closeModal());
   };
+
   const category = watch("category");
   const priority = watch("priority");
 
@@ -55,84 +75,125 @@ const TaskForm = ({ defaultCategory, mode }: TypeFormProps) => {
     <div className={`${darkMode ? "dark" : ""} bg-background text-foreground rounded-md`}>
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="py-2">
-          <Input
-            label="Title"
-            isRequired
-            {...register("title", {
+          <Controller
+            name="title"
+            rules={{
               required: { value: true, message: "Title is required" },
               minLength: { value: 2, message: "Title must have atleast one Character" },
               maxLength: { value: 120, message: "Title cannot be more than 120 characters" },
-            })}
-            isInvalid={!!errors.title?.message}
-            errorMessage={errors?.title?.message}
-            autoFocus
-            isReadOnly={mode === "View"}
+            }}
+            control={control}
+            render={({ field }) => (
+              <Input
+                isReadOnly={mode === "View"}
+                isInvalid={!!errors.title?.message}
+                errorMessage={errors?.title?.message}
+                label="Title"
+                isRequired
+                autoFocus
+                {...field}
+              />
+            )}
           />
         </div>
         <div className="py-2">
-          <Textarea
-            label="Description"
-            placeholder="Enter your description"
-            {...register("description")}
-            isInvalid={!!errors.description}
-            errorMessage={errors?.description?.message}
-            isReadOnly={mode === "View"}
+          <Controller
+            name="description"
+            control={control}
+            render={({ field }) => (
+              <Textarea
+                label="Description"
+                placeholder="Enter your description"
+                isInvalid={!!errors.description}
+                errorMessage={errors?.description?.message}
+                isReadOnly={mode === "View"}
+                {...field}
+              />
+            )}
           />
         </div>
         <div className="py-2">
-          <Select
-            items={categories.map((x) => ({ label: x, value: x }))}
-            label="Category"
-            placeholder="Select a category"
-            isRequired
-            {...register("category", {
+          <Controller
+            control={control}
+            name="category"
+            rules={{
               required: { value: true, message: "category is required" },
-              ...(!!defaultCategory && { disabled: true, value: defaultCategory }),
-            })}
-            isInvalid={!!errors.category}
-            errorMessage={errors?.category?.message}
-            isDisabled={!!defaultCategory || mode === "View"}
-            color={cColor}
-          >
-            {({ label, value }) => (
-              <SelectItem key={value} color={categoryColor[value] as Colors} value={value}>
-                {label}
-              </SelectItem>
+              ...(!!defaultCategory && !task && { disabled: true, value: defaultCategory }),
+            }}
+            render={({ field }) => (
+              <Select
+                {...field}
+                items={categories.map((x) => ({ label: x, value: x }))}
+                label="Category"
+                placeholder="Select a category"
+                isRequired
+                isInvalid={!!errors.category}
+                errorMessage={errors?.category?.message}
+                isDisabled={(!!defaultCategory && !task) || mode === "View"}
+                color={cColor}
+                defaultSelectedKeys={defaultValues.category ? [defaultValues.category] : []}
+                // {...register("category")}
+                selectedKeys={[category]}
+              >
+                {({ label, value }) => (
+                  <SelectItem key={value} color={categoryColor[value] as Colors}>
+                    {label}
+                  </SelectItem>
+                )}
+              </Select>
             )}
-          </Select>
+          />
         </div>
         <div className="py-2">
-          <Select
-            items={priorities.map((x) => ({ label: x, value: x }))}
-            label="Priority"
-            placeholder="Select a priority"
-            isRequired
-            {...register("priority", { required: { value: true, message: "priority is required" } })}
-            color={pColor}
-            isInvalid={!!errors.priority}
-            errorMessage={errors?.priority?.message}
-            isDisabled={mode === "View"}
-          >
-            {({ label, value }) => (
-              <SelectItem key={value} color={priorityColor[value] as Colors} value={value}>
-                {label}
-              </SelectItem>
+          <Controller
+            control={control}
+            name="priority"
+            rules={{
+              required: { value: true, message: "Priority is required" },
+            }}
+            render={({ field }) => (
+              <Select
+                {...field}
+                items={priorities.map((x) => ({ label: x, value: x }))}
+                label="Priority"
+                placeholder="Select a priority"
+                isRequired
+                color={pColor}
+                isInvalid={!!errors.priority}
+                errorMessage={errors?.priority?.message}
+                isDisabled={mode === "View"}
+                defaultSelectedKeys={defaultValues.priority ? [defaultValues.priority] : []}
+                selectedKeys={[priority]}
+              >
+                {({ label, value }) => (
+                  <SelectItem key={value} color={priorityColor[value] as Colors} value={value}>
+                    {label}
+                  </SelectItem>
+                )}
+              </Select>
             )}
-          </Select>
+          />
         </div>
         <div className="py-2">
-          <Input
-            defaultValue={nextMonthsDate}
-            label="Due Date"
-            type="Date"
-            isRequired
-            {...register("dueDate", {
+          <Controller
+            name="dueDate"
+            rules={{
               required: { value: true, message: "dueDate is required" },
               min: { value: tomorrow, message: "Due Date should be after today's date" },
-            })}
-            isInvalid={!!errors.dueDate}
-            errorMessage={errors?.dueDate?.message}
-            isReadOnly={mode === "View"}
+            }}
+            control={control}
+            render={({ field }) => (
+              <Input
+                defaultValue={nextMonthsDate}
+                label="Due Date"
+                type="Date"
+                isRequired
+                isInvalid={!!errors.dueDate}
+                errorMessage={errors?.dueDate?.message}
+                isReadOnly={mode === "View"}
+                {...field}
+              />
+            )}
           />
         </div>
         {mode !== "View" ? (

@@ -1,8 +1,8 @@
 import { Button, Popover, PopoverContent, PopoverTrigger } from "@nextui-org/react";
 import { Categories } from "src/@types/Task";
-import DeleteIcon from "../Icons/DeleteIcon";
 import { useAppDispatch } from "src/hooks";
 import { removeTask } from "src/reducers/tasks";
+import { DeleteIcon } from "../Icons";
 
 interface DeleteTaskButtonProps {
   category: Categories;

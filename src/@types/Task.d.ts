@@ -23,4 +23,6 @@ interface Tasks {
   COMPLETED: TaskItemType[];
 }
 
-export { Categories, Colors, Priority, TaskMode, TaskItemType, Tasks };
+type TaskItemInput = Omit<TaskItemType, "id" | "createdAt" | "updatedAt" | "completedAt"> & { category: Categories };
+
+export { Categories, Colors, Priority, TaskMode, TaskItemType, Tasks, TaskItemInput };

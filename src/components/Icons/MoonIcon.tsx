@@ -1,8 +1,4 @@
-import { ComponentProps } from "react";
-
-interface IconProps extends ComponentProps<"svg"> {
-  size: number;
-}
+import { IconProps } from "src/@types/Icons";
 
 const MoonIcon = (props: IconProps) => (
   <svg

@@ -15,7 +15,7 @@ const AddtaskButton = ({ category, size = 24 }: AddTaskButtonProps) => {
   const darkMode = useAppSelector(isDarkMode);
 
   const onAddClick = () => {
-    dispatch(openModal({ category, mode: "Add" }));
+    dispatch(openModal({ category, mode: "Add", selectedtask: undefined }));
   };
   return (
     <Tooltip content="Add Task">

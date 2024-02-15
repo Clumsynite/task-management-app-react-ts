@@ -63,10 +63,31 @@ export const tasksSlice = createSlice({
       state = { ...newtasksObj };
       localStorage.setItem("tasks", JSON.stringify(state));
     },
+    editTask: (
+      state,
+      action: PayloadAction<{ oldCategory: Categories; newCategory: Categories; task: TaskItemType }>
+    ) => {
+      const { newCategory, oldCategory, task } = action.payload;
+      const newtasksObj = { ...state };
+      task.updatedAt = new Date().toISOString();
+
+      const taskIndex = newtasksObj[oldCategory].findIndex((x) => (x.id = task.id));
+      if (taskIndex < 0) return;
+
+      if (oldCategory !== newCategory) {
+        newtasksObj[oldCategory].splice(taskIndex, 1);
+        newtasksObj[newCategory].push(task);
+      } else {
+        newtasksObj[newCategory][taskIndex] = task;
+      }
+
+      state = { ...newtasksObj };
+      localStorage.setItem("tasks", JSON.stringify(state));
+    },
   },
 });
 
-export const { onDragEnd, setTasks, addTask, removeTask } = tasksSlice.actions;
+export const { onDragEnd, setTasks, addTask, removeTask, editTask } = tasksSlice.actions;
 
 export const getTasks = (state: RootState) => state.tasks;
 
