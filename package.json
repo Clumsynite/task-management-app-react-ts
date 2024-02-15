@@ -7,12 +7,11 @@
     "name": "Rishabh Pathak",
     "url": "https://rishabhpathak.vercel.app/"
   },
-  "homepage": "https://clumsynite.github.io/task-management-app-react",
+  "homepage": "https://clumsynite.github.io/task-management-app-react-ts",
   "repository": {
     "type": "git",
-    "url": "https://github.com/Clumsynite/task-management-app-react"
+    "url": "https://github.com/Clumsynite/task-management-app-react-ts"
   },
-  "license": "MIT",
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
@@ -31,6 +30,7 @@
     "redux": "^5.0.1"
   },
   "devDependencies": {
+    "@faker-js/faker": "^8.4.1",
     "@types/react": "^18.2.55",
     "@types/react-beautiful-dnd": "^13.1.8",
     "@types/react-dom": "^18.2.19",

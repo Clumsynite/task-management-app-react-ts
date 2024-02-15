@@ -131,10 +131,8 @@ const TaskForm = ({ defaultCategory, mode, task }: TypeFormProps) => {
                 isRequired
                 isInvalid={!!errors.category}
                 errorMessage={errors?.category?.message}
-                // isDisabled={(!!defaultCategory && !task) || viewOnly}
                 color={cColor}
                 defaultSelectedKeys={defaultValues.category ? [defaultValues.category] : []}
-                // {...register("category")}
                 selectedKeys={category ? [category] : []}
                 {...(((!!defaultCategory && !task) || viewOnly) && { isOpen: false })}
               >
@@ -164,7 +162,6 @@ const TaskForm = ({ defaultCategory, mode, task }: TypeFormProps) => {
                 color={pColor}
                 isInvalid={!!errors.priority}
                 errorMessage={errors?.priority?.message}
-                // isDisabled={viewOnly}
                 defaultSelectedKeys={defaultValues.priority ? [defaultValues.priority] : []}
                 selectedKeys={priority ? [priority] : []}
                 {...(viewOnly && { isOpen: false })}

@@ -46,8 +46,9 @@ export const tasksSlice = createSlice({
       state = { ...newtasksObj };
       localStorage.setItem("tasks", JSON.stringify(state));
     },
-    setTasks: (_state, action: PayloadAction<Tasks>) => {
-      _state = action.payload;
+    setTasks: (state, action: PayloadAction<Tasks>) => {
+      localStorage.setItem("tasks", JSON.stringify(state));
+      return action.payload;
     },
     addTask: (state, action: PayloadAction<{ task: TaskItemType; category: Categories }>) => {
       const { category, task } = action.payload;

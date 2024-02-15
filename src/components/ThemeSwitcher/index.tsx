@@ -12,7 +12,6 @@ const ThemeSwitcher = () => {
       <div
         onClick={() => dispatch(toggle())}
         className="cursor-pointer"
-        // title={`Turn the lights ${darkMode ? "on" : "off"}`}
       >
         {darkMode ? <SunIcon size={24} /> : <MoonIcon size={24} />}
       </div>
