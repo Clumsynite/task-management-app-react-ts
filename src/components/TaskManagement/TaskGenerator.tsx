@@ -7,7 +7,6 @@ const TaskGenerator = () => {
   const dispatch = useAppDispatch();
   const onGenerate = () => {
     const dummyTasks = generateDummyTasks();
-    console.log({ dummyTasks });
     dispatch(setTasks(dummyTasks));
   };
   return (
