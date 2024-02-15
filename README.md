@@ -23,7 +23,7 @@ To get started with the Task Management App, follow these steps:
 1. **Clone the Repository**: Start by cloning this repository to your local machine using your preferred method. For example, you can use the following command in your terminal:
 
 ```bash
-git clone https://github.com/clumsynite/task-management-app-react.git
+git clone https://github.com/clumsynite/task-management-app-react-ts.git
 ```
 
 
