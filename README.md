@@ -10,12 +10,8 @@ Welcome to the Task Management App!
 
 * **Tailwind CSS**: It integrates Tailwind CSS, a highly customizable CSS framework that provides utility classes for rapid UI development.
 * **Vite**: The project is set up with Vite, a fast development build tool that offers quick server start-up, hot module replacement, and optimized production builds.
-
-* **PurgeCSS**: The production build is optimized with PurgeCSS, which removes unused CSS classes to reduce the file size.
-
-* **Responsive Design**: The repository includes responsive design classes and utilities to easily create mobile-friendly and responsive layouts.
-
 * **Customizable**: You can easily customize the default Tailwind CSS configuration by modifying the `tailwind.config.js` file.
+* **Redux**: Redux is a predictable state container for JavaScript apps.
 
 
 ## Getting Started
@@ -26,6 +22,7 @@ To get started with the Task Management App, follow these steps:
 
 ```bash
 git clone https://github.com/clumsynite/task-management-app-react-ts.git
+cd ./task-management-app-react-ts
 ```
 
 
@@ -46,13 +43,13 @@ yarn install
 4. **Development Workflow**: The repository is set up with Vite, which provides a fast development server and hot module replacement. Start the development server with the following command:
 
 ```bash
-npm start
+npm run dev
 ```
 
 or
 
 ```bash
-yarn start
+yarn dev
 ```
 
 This will start the development server and open the application in your default browser. You can make changes to the code, and the application will automatically reload.
@@ -74,10 +71,14 @@ This will create a `dist` directory with the optimized and minified production b
 
 6. **Start Developing**: Now you can start developing your React application! Create new components, modify existing ones, and utilize the utility classes provided by Tailwind CSS to rapidly build your UI.
 
-7. **Explore the Documentation**: For more information on React, Tailwind CSS, and React Router, refer to their respective documentation:
+7. **Explore the Documentation**: For more information on React, Tailwind CSS, and other packages, refer to their respective documentation:
 
+* Vite: https://vitejs.dev
 * React: https://reactjs.org/docs
 * Tailwind CSS: https://tailwindcss.com/docs
+* NextUI: https://nextui.org/docs
+* Redux Toolkit: https://redux-toolkit.js.org/introduction/getting-started
+* Faker: https://fakerjs.dev/
 
 ## Contributing
 
