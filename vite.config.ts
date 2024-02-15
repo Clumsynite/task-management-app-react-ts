@@ -12,4 +12,5 @@ export default defineConfig({
       src: "/src",
     },
   },
+  base: "/task-management-app-react-ts"
 });
