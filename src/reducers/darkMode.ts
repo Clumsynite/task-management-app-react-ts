@@ -13,8 +13,8 @@ const initialState: DarkModeState = {
   value: !isLocallyLight,
 };
 
-export const dakrModeSlice = createSlice({
-  name: "dakrMode",
+export const darkModeSlice = createSlice({
+  name: "darkMode",
   initialState,
   reducers: {
     toggle: (state) => {
@@ -24,8 +24,8 @@ export const dakrModeSlice = createSlice({
   },
 });
 
-export const { toggle } = dakrModeSlice.actions;
+export const { toggle } = darkModeSlice.actions;
 
-export const isDarkMode = (state: RootState) => state.dakrMode.value;
+export const isDarkMode = (state: RootState) => state.darkMode.value;
 
-export default dakrModeSlice.reducer;
+export default darkModeSlice.reducer;

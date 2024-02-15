@@ -14,7 +14,7 @@ const initialState: TaskModalState = {
   selectedtask: undefined,
 };
 
-export const dakrModeSlice = createSlice({
+export const darkModeSlice = createSlice({
   name: "taskModal",
   initialState,
   reducers: {
@@ -41,6 +41,6 @@ export const dakrModeSlice = createSlice({
   },
 });
 
-export const { openModal, closeModal } = dakrModeSlice.actions;
+export const { openModal, closeModal } = darkModeSlice.actions;
 
-export default dakrModeSlice.reducer;
+export default darkModeSlice.reducer;
