@@ -12,7 +12,7 @@ const TaskGenerator = () => {
   };
   return (
     <div className="flex flex-row justify-center items-center mt-28">
-      <Card className="w-1/4 p-12 bg-white-500 bg-opacity-15 backdrop-blur-xl drop-shadow-xl ">
+      <Card className="min-w-1/4 p-12 bg-white-500 bg-opacity-15 backdrop-blur-xl drop-shadow-xl ">
         <CardBody className="text-center">
           <div className="font-semibold text-xl py-2">Task List is Empty</div>
           <div className="py-2">

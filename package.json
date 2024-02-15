@@ -2,6 +2,7 @@
   "name": "task-management-app-ts",
   "version": "1.0.0",
   "type": "module",
+  "license": "MIT",
   "author": {
     "email": "clusmsyknight@gmail.com",
     "name": "Rishabh Pathak",
